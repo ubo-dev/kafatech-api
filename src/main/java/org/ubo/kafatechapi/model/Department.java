@@ -9,7 +9,7 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int departmentId;
+    private Integer departmentId;
     private String departmentName;
 
     @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
@@ -21,8 +21,7 @@ public class Department {
     @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
     private Set<Instructor> instructors;
 
-    public Department(int departmentId, String departmentName) {
-        this.departmentId = departmentId;
+    public Department(String departmentName) {
         this.departmentName = departmentName;
     }
 
@@ -30,7 +29,7 @@ public class Department {
 
     }
 
-    public int getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 

@@ -12,14 +12,20 @@ public class Instructor {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID instructorId;
 
+    private String firstName;
+
+    private String lastName;
+
     @OneToMany(mappedBy = "instructor", fetch = FetchType.EAGER)
     private Set<Lecture> lectures;
 
     @ManyToOne
     private Department department;
 
-    public Instructor(UUID instructorId, Set<Lecture> lectures, Department department) {
+    public Instructor(UUID instructorId, String firstName, String lastName, Set<Lecture> lectures, Department department) {
         this.instructorId = instructorId;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.lectures = lectures;
         this.department = department;
     }
