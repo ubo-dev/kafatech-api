@@ -1,5 +1,6 @@
 package org.ubo.kafatechapi.service.department;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.ubo.kafatechapi.dto.department.DepartmentDto;
 import org.ubo.kafatechapi.dto.department.request.CreateDepartmentRequest;
@@ -31,8 +32,16 @@ public class DepartmentServiceImpl implements DepartmentService {
         var departments = departmentRepository.findAll();
 
         if (!departments.isEmpty())
-            throw new RuntimeException("There is no department to show.");
+            throw new EntityNotFoundException("There is no department to show.");
 
         return departmentMapper.mapListToDto(departments, DepartmentDto.class);
+    }
+
+    public DepartmentDto findById(Integer id) {
+        var department = departmentRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("There is no department found with given id: " + id)
+        );
+
+        return departmentMapper.convertToDto(department, DepartmentDto.class);
     }
 }

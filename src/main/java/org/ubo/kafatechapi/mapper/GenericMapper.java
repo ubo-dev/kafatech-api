@@ -3,6 +3,7 @@ package org.ubo.kafatechapi.mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -59,7 +60,7 @@ public class GenericMapper<E, D> {
      * @param dtoClass The DTO class type.
      * @return The list of mapped DTOs.
      */
-    public List<D> mapListToDto(List<E> source, Class<D> dtoClass) {
+    public List<D> mapListToDto(Collection<E> source, Class<D> dtoClass) {
         return source.stream()
                 .map(element -> convertToDto(element, dtoClass))
                 .toList();

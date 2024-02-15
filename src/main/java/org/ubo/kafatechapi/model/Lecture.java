@@ -19,6 +19,11 @@ public class Lecture {
     @ManyToOne
     Instructor instructor;
     @ManyToMany
+    @JoinTable(
+            name = "student_lecture",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "lecture_id")
+    )
     Set<Student> students;
 
     @ManyToOne

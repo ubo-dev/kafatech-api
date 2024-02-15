@@ -27,6 +27,11 @@ public class Grade {
         this.student = student;
     }
 
+    public Grade(float gradePoint, LetterGrade letterGrade, Student student) {
+        this.gradePoint = gradePoint;
+        this.letterGrade = letterGrade;
+        this.student = student;
+    }
 
     public Grade() {
 

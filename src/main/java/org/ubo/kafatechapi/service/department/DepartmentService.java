@@ -13,4 +13,6 @@ public interface DepartmentService {
 
     List<DepartmentDto> getAllDepartment();
 
+    DepartmentDto findById(Integer id);
+
 }

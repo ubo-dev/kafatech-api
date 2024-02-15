@@ -1,6 +1,7 @@
 package org.ubo.kafatechapi.model;
 
 import jakarta.persistence.*;
+import org.ubo.kafatechapi.dto.department.DepartmentDto;
 
 import java.util.List;
 import java.util.Set;
@@ -17,7 +18,7 @@ public class Student {
     private String lastName;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
@@ -33,6 +34,12 @@ public class Student {
 
     public Student(UUID studentId, String firstName, String lastName, Department department) {
         this.studentId = studentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.department = department;
+    }
+
+    public Student(String firstName, String lastName, Department department) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.department = department;
