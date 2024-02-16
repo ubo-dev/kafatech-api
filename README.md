@@ -44,6 +44,13 @@ GET /api/students/getAll - retrieves all students
 - Restful API
 - Docker
 - Docker compose
+- Postgres
+- PgAdmin
+
+### DB Diagram
+
+![image](https://github.com/ubo-dev/kafatech-api/assets/79909004/e33fe4ad-a189-4314-ae63-132f50e9af99)
+
 
 ### Prerequisites
 
