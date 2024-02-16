@@ -14,10 +14,16 @@ public class Grade {
 
     private float gradePoint;
 
+    @Enumerated(EnumType.STRING)
     private LetterGrade letterGrade;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_id")
     private Student student;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "lecture_id")
+    private Lecture lecture;
 
 
     public Grade(UUID gradeId, float gradePoint, LetterGrade letterGrade, Student student) {
@@ -27,10 +33,11 @@ public class Grade {
         this.student = student;
     }
 
-    public Grade(float gradePoint, LetterGrade letterGrade, Student student) {
+    public Grade(float gradePoint, LetterGrade letterGrade, Student student, Lecture lecture) {
         this.gradePoint = gradePoint;
         this.letterGrade = letterGrade;
         this.student = student;
+        this.lecture = lecture;
     }
 
     public Grade() {
@@ -67,5 +74,9 @@ public class Grade {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Lecture getLecture() {
+        return lecture;
     }
 }

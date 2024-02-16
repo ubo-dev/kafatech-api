@@ -21,7 +21,8 @@ public class StudentController {
 
     @GetMapping("/getAll")
     public ResponseEntity<List<StudentDto>> getAllStudents() {
-        return ResponseEntity.ok(studentService.getAll());
+        List<StudentDto> studentDtos = studentService.getAll();
+        return ResponseEntity.ok(studentDtos);
     }
 
     @GetMapping("/getStudentById/{id}")

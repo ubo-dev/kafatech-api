@@ -2,10 +2,12 @@ package org.ubo.kafatechapi.service.student;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.ubo.kafatechapi.dto.converter.DepartmentDtoConverter;
+import org.ubo.kafatechapi.dto.converter.GradeDtoConverter;
+import org.ubo.kafatechapi.dto.converter.StudentDtoConverter;
 import org.ubo.kafatechapi.dto.department.DepartmentDto;
 import org.ubo.kafatechapi.dto.student.StudentDto;
 import org.ubo.kafatechapi.dto.student.request.CreateStudentRequest;
-import org.ubo.kafatechapi.mapper.GenericMapper;
 import org.ubo.kafatechapi.model.Department;
 import org.ubo.kafatechapi.model.Student;
 import org.ubo.kafatechapi.repository.StudentRepository;
@@ -19,27 +21,35 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final DepartmentService departmentService;
+    private final StudentDtoConverter studentDtoConverter;
+    private final DepartmentDtoConverter departmentDtoConverter;
+    private final GradeDtoConverter gradeDtoConverter;
 
-    private final GenericMapper<Student, StudentDto> studentMapper = new GenericMapper<>();
-    private final GenericMapper<Department, DepartmentDto> departmentMapper = new GenericMapper<>();
-
-    public StudentServiceImpl(StudentRepository studentRepository, DepartmentService departmentService) {
+    public StudentServiceImpl(StudentRepository studentRepository, DepartmentService departmentService,
+                              StudentDtoConverter studentDtoConverter, DepartmentDtoConverter departmentDtoConverter,
+                              GradeDtoConverter gradeDtoConverter) {
         this.studentRepository = studentRepository;
         this.departmentService = departmentService;
+        this.studentDtoConverter = studentDtoConverter;
+        this.departmentDtoConverter = departmentDtoConverter;
+        this.gradeDtoConverter = gradeDtoConverter;
     }
 
     public StudentDto create(CreateStudentRequest request) {
-        Department department = departmentMapper.convertToEntity(departmentService.findById(
-                request.department().getId()
-        ), Department.class);
+        DepartmentDto department = departmentService.findById(
+                request.department().id()
+        );
 
         Student student = new Student(
                 request.firstName(),
                 request.lastName(),
-                department
+                new Department(
+                        department.id(),
+                        department.departmentName()
+                )
         );
 
-        return studentMapper.convertToDto(studentRepository.save(student), StudentDto.class);
+        return studentDtoConverter.convertStudentDto(studentRepository.save(student));
     }
 
     public List<StudentDto> getAll() {
@@ -48,7 +58,7 @@ public class StudentServiceImpl implements StudentService {
         if (students.isEmpty())
             throw new EntityNotFoundException("There is no student to show.");
 
-        return studentMapper.mapListToDto(students, StudentDto.class);
+        return studentDtoConverter.convertStudentDtoList(students);
     }
 
 
@@ -57,6 +67,6 @@ public class StudentServiceImpl implements StudentService {
                 () -> new EntityNotFoundException("There is no student found with given id")
         );
 
-        return studentMapper.convertToDto(student, StudentDto.class);
+        return studentDtoConverter.convertStudentDto(student);
     }
 }

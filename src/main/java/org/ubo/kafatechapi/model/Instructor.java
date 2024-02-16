@@ -19,7 +19,8 @@ public class Instructor {
     @OneToMany(mappedBy = "instructor", fetch = FetchType.EAGER)
     private Set<Lecture> lectures;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_id")
     private Department department;
 
     public Instructor(UUID instructorId, String firstName, String lastName, Set<Lecture> lectures, Department department) {
@@ -32,6 +33,22 @@ public class Instructor {
 
     public Instructor() {
 
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public UUID getInstructorId() {

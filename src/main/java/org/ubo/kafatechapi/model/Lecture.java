@@ -16,7 +16,8 @@ public class Lecture {
 
     private String lectureName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "instructor_id")
     Instructor instructor;
     @ManyToMany
     @JoinTable(
@@ -26,7 +27,8 @@ public class Lecture {
     )
     Set<Student> students;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_id")
     Department department;
 
     public Lecture(UUID lectureId, String lectureCode, String lectureName, Instructor instructor, Department department) {
